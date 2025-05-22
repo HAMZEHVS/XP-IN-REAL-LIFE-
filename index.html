@@ -322,23 +322,7 @@
         buildMindmap();
     </script>
 </body>
-</html>
 <!DOCTYPE html>
-<html>
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8" />
-  <title>XP in Real Life - Interactive Mindmap</title>
-  <style>
-    <!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8" />
-  <title>XP in Real Life - Interactive Mindmap</title>
-  <style>
-    body {
-    <!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
@@ -353,46 +337,19 @@
       direction: rtl;
     }
 
-    /* زر لايك بسيط */
-    .like-section {
-      max-width: 600px;
-      margin: 30px auto;
-      text-align: center;
-    }
-
-    #likeBtn {
-      font-size: 24px;
-      background-color: #e74c3c;
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    #likeBtn:hover {
-      background-color: #c0392b;
-    }
-
-    /* خلفية قسم التعليقات الخارجي فقط */
+    /* خلفية قسم التعليقات الخارجي كاملة */
     #cusdis_thread {
       max-width: 700px;
       margin: 40px auto;
-      background: rgba(0, 0, 0, 0.85); /* خلفية سوداء مظللة */
-      padding: 20px;
+      background: rgba(0, 0, 0, 0.9); /* خلفية سوداء مظللة كاملة */
+      padding: 30px; /* زيادة الحشو ليكون المحتوى واضح */
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.8);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+      min-height: 300px; /* ارتفاع أدنى للقسم */
     }
   </style>
 </head>
 <body>
-
-<!-- زر اللايك -->
-<div class="like-section">
-  <button id="likeBtn" onclick="handleLike()">👍 أعجبني</button>
-  <div id="likeStatus" style="margin-top:10px; font-size:16px; color:#f39c12;"></div>
-</div>
 
 <!-- قسم التعليقات الخارجي (Cusdis) -->
 <div id="cusdis_thread"
@@ -405,20 +362,9 @@
 
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 
-<script>
-  // زر لايك بسيط فقط للعرض (لا يحفظ أو يشارك الإعجابات)
-  function handleLike() {
-    const btn = document.getElementById('likeBtn');
-    const status = document.getElementById('likeStatus');
-    
-    btn.disabled = true;
-    btn.style.cursor = 'not-allowed';
-    status.textContent = 'شكراً على إعجابك!';
-  }
-</script>
-
 </body>
 </html>
+
 
 
 </script>
