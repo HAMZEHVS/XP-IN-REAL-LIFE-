@@ -331,75 +331,63 @@
   <meta charset="UTF-8" />
   <title>XP in Real Life - Interactive Mindmap</title>
   <style>
+    <!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>XP in Real Life - Interactive Mindmap</title>
+  <style>
     body {
       font-family: 'Arial', sans-serif;
       background: url('images/background.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: #ecf0f1;
       margin: 20px;
+      direction: rtl;
     }
-    .interaction-box {
-      margin: 30px auto;
-      padding: 20px;
+
+    /* تصميم زر اللايك */
+    .like-section {
       max-width: 600px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
-      color: white;
+      margin: 30px auto;
+      text-align: center;
     }
-    .like-section button {
-      padding: 10px 20px;
-      font-size: 18px;
-      background: #2ecc71;
+
+    #likeBtn {
+      font-size: 24px;
+      background-color: #e74c3c;
+      color: white;
       border: none;
-      border-radius: 5px;
+      padding: 12px 30px;
+      border-radius: 50px;
       cursor: pointer;
-      transition: transform 0.3s;
+      transition: background-color 0.3s ease;
     }
-    .like-section button:disabled {
-      background: #7f8c8d;
-      cursor: not-allowed;
+
+    #likeBtn:hover {
+      background-color: #c0392b;
     }
-    .comments-section {
-      margin-top: 20px;
-    }
-    #commentInput {
-      padding: 8px;
-      width: 70%;
-      margin-right: 10px;
-      border: 1px solid #3498db;
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
-    }
-    #commentsList {
-      margin-top: 15px;
-    }
-    .comment {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border-left: 3px solid #3498db;
+
+    /* تصميم قسم التعليقات (Cusdis) */
+    #cusdis_thread {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(0, 0, 0, 0.65); /* خلفية مظللة */
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
 
-<div class="interaction-box">
-  <div class="like-section">
-    <button id="likeBtn" onclick="handleLike()">👍 <span id="likeCount">0</span></button>
-  </div>
-  
-  <div class="comments-section">
-    <h3>Comments (localStorage):</h3>
-    <input type="text" id="commentInput" placeholder="Write your comment...">
-    <button onclick="addComment()">Post</button>
-    <div id="commentsList"></div>
-  </div>
+<!-- زر اللايك -->
+<div class="like-section">
+  <button id="likeBtn" onclick="handleLike()">👍 أعجبني</button>
+  <div id="likeStatus" style="margin-top:10px; font-size:16px; color:#f39c12;"></div>
 </div>
 
-<!-- قسم التعليقات الخاص بـ Cusdis -->
+<!-- قسم تعليقات Cusdis -->
 <div id="cusdis_thread"
   data-host="https://cusdis.com"
   data-app-id="850948e7-6f7d-4892-8976-4e4be5b4bcee"
@@ -411,64 +399,20 @@
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 
 <script>
-// Like System
-let likes = parseInt(localStorage.getItem('likes')) || 0;
-let hasLiked = localStorage.getItem('hasLiked') === 'true';
-
-function handleLike() {
-  if (!hasLiked) {
-    likes++;
-    hasLiked = true;
-    localStorage.setItem('likes', likes);
-    localStorage.setItem('hasLiked', 'true');
-    updateLikeDisplay();
-  }
-}
-
-function updateLikeDisplay() {
-  document.getElementById('likeCount').textContent = likes;
-  document.getElementById('likeBtn').disabled = hasLiked;
-}
-
-// Comment System (localStorage)
-function addComment() {
-  const commentInput = document.getElementById('commentInput');
-  const commentText = commentInput.value.trim();
-  
-  if (commentText) {
-    const comment = {
-      text: commentText,
-      date: new Date().toLocaleString('en-US')
-    };
+  // لايك بسيط مع رسالة فقط (ليس مخزن وعدد عالمي)
+  function handleLike() {
+    const btn = document.getElementById('likeBtn');
+    const status = document.getElementById('likeStatus');
     
-    // Save comment
-    const comments = JSON.parse(localStorage.getItem('comments') || '[]');
-    comments.push(comment);
-    localStorage.setItem('comments', JSON.stringify(comments));
-    
-    // Display comment
-    displayComment(comment);
-    commentInput.value = '';
+    btn.disabled = true;
+    btn.style.cursor = 'not-allowed';
+    status.textContent = 'شكراً على إعجابك!';
   }
-}
+</script>
 
-function displayComment(comment) {
-  const commentDiv = document.createElement('div');
-  commentDiv.className = 'comment';
-  commentDiv.innerHTML = `
-    <div>${comment.text}</div>
-    <small>${comment.date}</small>
-  `;
-  document.getElementById('commentsList').appendChild(commentDiv);
-}
+</body>
+</html>
 
-// Initialize on load
-window.onload = () => {
-  updateLikeDisplay();
-  
-  // Load previous comments from localStorage
-  const savedComments = JSON.parse(localStorage.getItem('comments') || '[]');
-  savedComments.forEach(comment => displayComment(comment));
 };
 </script>
 
