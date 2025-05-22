@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XP in Real Life - Interactive Mindmap</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('images/background.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ecf0f1;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2ecc71;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .skill-node {
+            cursor: pointer;
+            padding: 15px;
+            background: #3498db;
+            margin: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        .skill-node:hover {
+            transform: scale(1.05);
+            background: #2980b9;
+        }
+        .games-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid #2ecc71;
+        }
+        .game-node {
+            background: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .game-node img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        a {
+            color: #2ecc71;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 XP in Real Life: Skills from Games</h1>
+
+    <!-- صوت ترحيبي -->
+    <audio id="welcomeAudio" autoplay hidden>
+        <source src="sounds/hmzsound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="mindmap"></div>
+
+    <script>
+        // تشغيل الصوت الترحيبي تلقائيًا أو عند أول نقرة
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('welcomeAudio');
+            const playAudio = () => {
+                audio.play().catch(() => {
+                    // إذا منعه المتصفح، ننتظر أول تفاعل من المستخدم
+                    document.body.addEventListener('click', () => {
+                        audio.play();
+                    }, { once: true });
+                });
+            };
+            playAudio();
+        });
+
+        const skillsData = [
+            {
+                name: "Problem Solving",
+                games: [
+                    { 
+                        name: "Chess", 
+                        image: "images/chess.jpg",
+                        source: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2017.00238/full",
+                        ost: ""
+                    },
+                    {
+                        name: "Portal 2",
+                        image: "images/portal2.jpeg",
+                        source: "https://files.eric.ed.gov/fulltext/ED562232.pdf",
+                        ost: ""
+                    }
+                ]
+            },
+            {
+                name: "Teamwork",
+                games: [
+                    {
+                        name: "Overcooked 2",
+                        image: "images/overcooked2.jpeg",
+                        source: "https://www.researchgate.net/publication/341834871_CHAOPT_A_Testbed_for_Evaluating_Human-Autonomy_Team_Collaboration_Using_the_Video_Game_Overcooked2",
+                        ost: ""
+                    },
+                    {
+                        name: "Rocket League",
+                        image: "images/rocketleague.jpeg",
+                        source: "https://gamersrdy.com/product/ultimate-guide-to-teamwork-in-rocket-league/",
+                        ost: ""
+                    }
+                ]
+            },
+            {
+                name: "Time Management",
+                games: [
+                    {
+                        name: "Diner Dash",
+                        image: "images/dinerdash.jpeg",
+                        source: "https://www.smarter.com/fun/mastering-diner-dash-tips-tricks-beating-every-level",
+                        ost: ""
+                    },
+                    {
+                        name: "The Sims 4",
+                        image: "images/thesims4.jpeg",
+                        source: "https://gamerant.com/the-sims-4-research-and-debate-skill-guide/",
+                        ost: ""
+                    }
+                ]
+            },
+            {
+                name: "Leadership",
+                games: [
+                    {
+                        name: "Among Us",
+                        image: "images/amongus.jpeg",
+                        source: "https://thesmscity.com/blogs/among-us-as-a-tool-for-team-building-and-communication-skills/",
+                        ost: ""
+                    },
+                    {
+                        name: "League of Legends",
+                        image: "images/leagueoflegends.jpeg",
+                        source: "https://sites.lsa.umich.edu/wp-content/uploads/sites/176/2015/02/Kim-Engel-William-Woolley-Lin-Mcarthur-and-Malone-CI-2015-Abstract.pdf",
+                        ost: ""
+                    }
+                ]
+            },
+            {
+                name: "Communication",
+                games: [
+                    {
+                        name: "Keep Talking and Nobody Explodes",
+                        image: "images/keep.jpg",
+                        source: "https://www.emerald.com/insight/content/doi/10.1108/jole-05-2024-0066/full/html",
+                        ost: ""
+                    },
+                    {
+                        name: "Phasmophobia",
+                        image: "images/phasmophobia.jpeg",
+                        source: "https://steamcommunity.com/sharedfiles/filedetails/?id=2256541272",
+                        ost: ""
+                    }
+                ]
+            }
+        ];
+
+        function buildMindmap() {
+            const mindmap = document.getElementById("mindmap");
+            skillsData.forEach(skill => {
+                const skillDiv = document.createElement("div");
+                skillDiv.className = "skill-node";
+                skillDiv.innerHTML = skill.name;
+                skillDiv.onclick = () => toggleGames(skillDiv, skill.games);
+                mindmap.appendChild(skillDiv);
+            });
+        }
+
+        function toggleGames(skillDiv, games) {
+            const existingGames = skillDiv.nextElementSibling;
+            if (existingGames && existingGames.classList.contains("games-container")) {
+                existingGames.remove();
+                return;
+            }
+
+            const gamesContainer = document.createElement("div");
+            gamesContainer.className = "games-container";
+
+            games.forEach(game => {
+                const gameDiv = document.createElement("div");
+                gameDiv.className = "game-node";
+                gameDiv.innerHTML = `
+                    <img src="${game.image}" alt="${game.name}">
+                    <h3>${game.name}</h3>
+                    <a href="${game.source}" target="_blank">🔍 Research Source</a>
+                    ${game.ost ? `<audio controls><source src="${game.ost}" type="audio/mpeg"></audio>` : ""}
+                `;
+                gamesContainer.appendChild(gameDiv);
+            });
+
+            skillDiv.parentNode.insertBefore(gamesContainer, skillDiv.nextSibling);
+        }
+
+        buildMindmap();
+    </script>
+</body>
+</html>
