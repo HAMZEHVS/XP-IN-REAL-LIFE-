@@ -337,15 +337,14 @@
       direction: rtl;
     }
 
-    /* خلفية قسم التعليقات الخارجي كاملة */
+    /* قسم التعليقات بدون خلفية داكنة */
     #cusdis_thread {
       max-width: 700px;
       margin: 40px auto;
-      background: rgba(0, 0, 0, 0.9); /* خلفية سوداء مظللة كاملة */
-      padding: 30px; /* زيادة الحشو ليكون المحتوى واضح */
+      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
-      min-height: 300px; /* ارتفاع أدنى للقسم */
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* ظل خفيف بدون تعتيم المحتوى */
+      background: transparent; /* لا خلفية داكنة */
     }
   </style>
 </head>
@@ -364,6 +363,7 @@
 
 </body>
 </html>
+
 
 
 
